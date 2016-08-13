@@ -6,6 +6,7 @@ RUN echo "deb http://packages.linuxmint.com debian import" >> /etc/apt/sources.l
 RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 3EE67F3D0FF405B2
 
 RUN apt-get update && apt-get install -y \
+    wkhtmltopdf \
     nodejs \
     npm \
     firefox \
