@@ -32,7 +32,7 @@ RUN npm install -g n
 RUN n stable
 
 RUN rm -rf /var/lib/apt/lists
-RUN mkdir -f /local_home 
+RUN mkdir /local_home 
 RUN chown -R jenkins /local_home
 RUN Xvfb :10 -ac&
 RUN echo "export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final" >> ~/.bashrc
