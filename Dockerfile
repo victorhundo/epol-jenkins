@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
    nodejs \
    npm \
    firefox \
-   xvfb \
+   xvfb
 RUN rm -rf /var/lib/apt/lists
 RUN mkdir /local_home 
 RUN chown -R jenkins /local_home
