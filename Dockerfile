@@ -50,6 +50,11 @@ RUN rm -rf /var/lib/apt/lists
 RUN mkdir /local_home
 RUN chown -R jenkins /local_home
 RUN Xvfb :10 -ac&
+# Definindo a variável de ambiente JBOSS_HOME
 RUN echo "export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final" >> ~/.bashrc
+RUN export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final
+# Definindo o timezone do sistema
+RUN echo "America/Recife" > /etc/timezone
+RUN export TZ=America/Noronha
 
 USER jenkins
