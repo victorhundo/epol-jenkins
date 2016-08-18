@@ -36,7 +36,16 @@ RUN apt-get update && apt-get install -y \
    nodejs \
    npm \
    firefox \
-   xvfb
+   xvfb \
+   xfonts-75dpi
+
+RUN wget http://ftp.br.debian.org/debian/pool/main/libj/libjpeg8/libjpeg8_8d1-2_amd64.deb
+RUN wget http://boss.splab.ufcg.edu.br/~epol/ferramentasDev/wkhtmltox-0.12.2.1_linux-wheezy-amd64.deb
+RUN dpkg -i libjpeg8_8d1-2_amd64.deb
+RUN dpkg -i wkhtmltox-0.12.2.1_linux-wheezy-amd64.deb
+RUN rm libjpeg8_8d1-2_amd64.deb
+RUN rm wkhtmltox-0.12.2.1_linux-wheezy-amd64.deb
+
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN npm cache clean -f
 RUN npm install -g n
