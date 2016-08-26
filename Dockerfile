@@ -37,7 +37,8 @@ RUN apt-get update && apt-get install -y \
    npm \
    firefox \
    xvfb \
-   xfonts-75dpi
+   xfonts-75dpi \
+&& rm -rf /var/lib/apt/lists/*
 
 RUN wget http://ftp.br.debian.org/debian/pool/main/libj/libjpeg8/libjpeg8_8d1-2_amd64.deb
 RUN wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-jessie-amd64.deb
