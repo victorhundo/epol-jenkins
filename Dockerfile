@@ -27,6 +27,8 @@ RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com  EEA14886
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
 
+RUN ln -sf /usr/share/zoneinfo/America/Recife /etc/localtime
+
 # Instalação das ferramentas necessárias para o projeto
 RUN apt-get update && apt-get install -y \
    oracle-java8-installer \
