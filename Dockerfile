@@ -20,8 +20,11 @@ RUN echo "deb http://packages.linuxmint.com debian import" >> /etc/apt/sources.l
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list
 RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list
 
-RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 3EE67F3D0FF405B2
-RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com  EEA14886
+# RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com: 3EE67F3D0FF405B2
+# RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com: EEA14886
+
+RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 3EE67F3D0FF405B2
+RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys EEA14886
 
 # Configuração para instalação silenciosa do oracle-java
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
@@ -40,6 +43,7 @@ RUN apt-get update && apt-get install -y \
    firefox \
    xvfb \
    xfonts-75dpi \
+   sshpass \
 && rm -rf /var/lib/apt/lists/*
 
 RUN wget http://ftp.br.debian.org/debian/pool/main/libj/libjpeg8/libjpeg8_8d1-2_amd64.deb
