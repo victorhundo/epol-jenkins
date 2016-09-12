@@ -20,11 +20,8 @@ RUN echo "deb http://packages.linuxmint.com debian import" >> /etc/apt/sources.l
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list
 RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list
 
-# RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com: 3EE67F3D0FF405B2
-# RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com: EEA14886
-
-RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 3EE67F3D0FF405B2
-RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys EEA14886
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com: 3EE67F3D0FF405B2
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com: EEA14886
 
 # Configuração para instalação silenciosa do oracle-java
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
@@ -61,14 +58,15 @@ RUN npm install -g gulp-cli
 RUN npm install -g gulp
 
 # Configuração do ambiente do projeto para execução dos testes
-
 RUN rm -rf /var/lib/apt/lists
 RUN mkdir /local_home
 RUN chown -R jenkins /local_home
 RUN Xvfb :10 -ac&
+
 # Definindo a variável de ambiente JBOSS_HOME
 RUN echo "export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final" >> ~/.bashrc
 RUN export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final
+
 # Definindo o timezone do sistema
 RUN echo "America/Recife" > /etc/timezone
 RUN export TZ=America/Recife
