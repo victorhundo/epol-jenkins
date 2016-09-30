@@ -54,8 +54,8 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node \
 
 # Configuração do ambiente do projeto para execução dos testes
 RUN rm -rf /var/lib/apt/lists \
- && apt-get autoclean \
- && apt-get autoremove \
+ && apt-get autoclean -y \
+ && apt-get autoremove -y \
  && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /local_home \
