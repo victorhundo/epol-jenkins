@@ -62,13 +62,14 @@ RUN mkdir /local_home \
  && chown -R jenkins /local_home \
  && Xvfb :10 -ac&
 
-# Definindo a variável de ambiente JBOSS_HOME
-RUN echo "export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final" >> ~/.bashrc \
- && export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final
-
 # Definindo localtime e timezone do sistema
 RUN ln -sf /usr/share/zoneinfo/America/Recife /etc/localtime \
  && echo "America/Recife" > /etc/timezone \
  && export TZ=America/Recife
 
 USER jenkins
+
+# Definindo a variável de ambiente JBOSS_HOME
+RUN echo "export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final" >> ~/.bashrc \
+ && export JBOSS_HOME=/local_home/epol/wildfly-10.0.0.Final
+
