@@ -1,13 +1,13 @@
 ########################################################################
-#								       #
-# Configuração do container do Jenkins do projeto ePol. 	       #
+#				                                                       #
+# Configuração do container do Jenkins do projeto ePol. 	           #
 # Esse Dockerfile tem como dependência o container oficial do Jenkins  #
-# na versão latest       					       #
-# Autores: Victor Hugo, Bruno Dias 				       #
-#								       #
+# em sua última versão                        					       #
+# Autores: Victor Hugo, Bruno Dias                 				       #
+#								                                       #
 ########################################################################
 
-FROM jenkins:2.46.2
+FROM jenkins:latest
 
 USER root
 
@@ -25,7 +25,7 @@ RUN echo "deb http://ftp.br.debian.org/debian/ jessie main non-free contrib" >  
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
 
-# Instalação das ferramentas necessárias para o projeto
+# Instalação das ferramentas necessárias para os projetos
 RUN apt-get update && apt-get install -y \
    oracle-java8-installer \
    oracle-java8-set-default \
@@ -36,8 +36,14 @@ RUN apt-get update && apt-get install -y \
    firefox \
    xvfb \
    xfonts-75dpi \
-   sshpass
+   sshpass \
+   apt-transport-https \
+   ca-certificates \
+   gnupg2 \
+   software-properties-common \
+   lsb-release
 
+# Instalação do wkhtmlpdf
 RUN wget http://ftp.br.debian.org/debian/pool/main/libj/libjpeg8/libjpeg8_8d1-2_amd64.deb \
  && wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-jessie-amd64.deb \
  && dpkg -i libjpeg8_8d1-2_amd64.deb \
@@ -45,6 +51,7 @@ RUN wget http://ftp.br.debian.org/debian/pool/main/libj/libjpeg8/libjpeg8_8d1-2_
  && rm libjpeg8_8d1-2_amd64.deb \
  && rm wkhtmltox-0.12.2.1_linux-jessie-amd64.deb
 
+# Instalação do npm latest
 RUN ln -s /usr/bin/nodejs /usr/bin/node \
  && npm cache clean -f \
  && npm install -g n \
@@ -52,7 +59,19 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node \
  && npm install -g gulp-cli \
  && npm install -g gulp
 
-# Configuração do ambiente do projeto para execução dos testes
+# Instalação do Docker 
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+ && apt-key fingerprint 0EBFCD88 \
+ && add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) \
+  stable" \
+ && apt-get update && apt-get install -y docker-ce \
+ && usermod -aG staff jenkins \
+ && touch /var/run/docker.sock \
+ && chown root:docker /var/run/docker.sock
+
+# Removendo informações das instalações realizadas
 RUN rm -rf /var/lib/apt/lists \
  && apt-get autoclean -y \
  && apt-get autoremove -y \
