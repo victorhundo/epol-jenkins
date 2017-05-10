@@ -67,7 +67,7 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
   $(lsb_release -cs) \
   stable" \
  && apt-get update && apt-get install -y docker-ce \
- && usermod -aG staff jenkins \
+ && usermod -aG docker jenkins \
  && touch /var/run/docker.sock \
  && chown root:docker /var/run/docker.sock
 
